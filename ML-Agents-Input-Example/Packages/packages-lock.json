@@ -112,7 +112,8 @@
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "com.unity.ml-agents": "1.7.2-preview"
+        "com.unity.ml-agents": "1.7.2-preview",
+        "com.unity.inputsystem": "1.0.1"
       }
     },
     "com.unity.multiplayer-hlapi": {
