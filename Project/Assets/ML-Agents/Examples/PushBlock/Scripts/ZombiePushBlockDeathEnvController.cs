@@ -108,10 +108,12 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
         {
             if (UseTeamReward)
             {
+                print("create PushBlockTeamManager");
                 m_TeamManager = new PushBlockTeamManager();
             }
             else
             {
+                print("create BaseTeamManager");
                 m_TeamManager = new BaseTeamManager();
             }
         }
@@ -156,6 +158,7 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
         {
             if (item.Col == col.collider)
             {
+                print($"call endepisode on agent {item.Agent.gameObject.GetInstanceID()}");
                 item.Agent.EndEpisode();
                 item.Col.gameObject.SetActive(false);
                 break;
@@ -238,6 +241,7 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
         // col.gameObject.SetActive(false);
 
         //Give Agent Rewards
+        print($"scored");
         if (UseTeamManager && UseTeamReward)
         {
             var pushManager = (PushBlockTeamManager)m_TeamManager;
@@ -267,6 +271,7 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
 
     public void ZombieTouchedBlock()
     {
+        print("Zombie Touched Block");
         //Give Agent Rewards
         if (UseTeamManager && UseTeamReward)
         {
@@ -294,6 +299,7 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
 
     void ResetScene()
     {
+        print("Reset Scene");
         m_ResetTimer = 0;
 
         //Random platform rot
@@ -360,5 +366,6 @@ public class ZombiePushBlockDeathEnvController : MonoBehaviour
         //Reset counter
         m_NumberOfRemainingBlocks = BlocksList.Count;
         // m_NumberOfRemainingBlocks = 2;
+        print("EndEpisode");
     }
 }

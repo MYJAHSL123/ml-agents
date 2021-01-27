@@ -423,6 +423,7 @@ namespace Unity.MLAgents
             m_PolicyFactory = GetComponent<BehaviorParameters>();
 
             m_Info = new AgentInfo();
+            Debug.Log($"Agent {this.gameObject.GetInstanceID()} reset done state");
             sensors = new List<ISensor>();
 
             Academy.Instance.AgentIncrementStep += AgentIncrementStep;
@@ -525,6 +526,7 @@ namespace Unity.MLAgents
         {
             if (m_Info.done)
             {
+                Debug.Log($"Notify agent {this.gameObject.GetInstanceID()} that is already done");
                 // The Agent was already marked as Done and should not be notified again
                 return;
             }
@@ -575,11 +577,14 @@ namespace Unity.MLAgents
             m_RequestAction = false;
             m_RequestDecision = false;
             m_Info.storedActions.Clear();
+            Debug.Log($"Finish NotifyAgentDone for agent {this.gameObject.GetInstanceID()}");
         }
 
         public void SendDoneToTrainer()
         {
             // We request a decision so Python knows the Agent is done immediately
+            // Debug.Log($"Agent {this.gameObject.GetInstanceID()} send done info with reward {m_Info.reward}");
+            Debug.Log($"Agent {this.gameObject.GetInstanceID()} send done info with episode id {m_Info.episodeId}");
             m_Brain?.RequestDecision(m_Info, sensors);
             ResetSensors();
         }
@@ -1074,6 +1079,10 @@ namespace Unity.MLAgents
 
             m_Info.discreteActionMasks = m_ActuatorManager.DiscreteActionMask?.GetMask();
             m_Info.reward = m_Reward;
+            if (m_Info.done == true)
+            {
+                Debug.Log($"Agent {this.gameObject.GetInstanceID()} reset done state");
+            }
             m_Info.done = false;
             m_Info.maxStepReached = false;
             m_Info.episodeId = m_EpisodeId;
